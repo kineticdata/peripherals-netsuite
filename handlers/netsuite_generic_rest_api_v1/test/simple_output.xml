@@ -1,0 +1,5 @@
+<results>
+    <result name="Response Body" type="RegExp">.+</result>
+    <result name="Response Code" type="RegExp">.+</result>
+    <result name="Handler Error Message" type="Regexp"></result>
+</results>

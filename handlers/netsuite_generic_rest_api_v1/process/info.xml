@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taskInfo version="1.0">
+  <info name="netsuite_environment" description="Netsuite Environment">817284-sb1</info>
+  <info name="consumer_key" description="Netsuite Integration Record Consumer Key"></info>
+  <info name="consumer_secret" description="Netsuite Integration Record Consumer Secret" type="encrypted"></info>
+  <info name="token_id" description="Netsuite Token Id"></info>
+  <info name="token_secret" description="Netsuite Token Secret" type="encrypted"></info>
+  <info name="enable_debug_logging" description="Enable debug logging if the value is set to 'Yes'.">No</info>
+</taskInfo>
