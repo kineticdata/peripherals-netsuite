@@ -31,11 +31,12 @@ class NetsuiteGenericSoapApiV1
     @token_secret = @info_values["token_secret"]
     @nonce = Array.new(20) { [*"0".."9", *"A".."Z", *"a".."z"].sample }.join
     @timestamp = Time.now.to_i
-    @oauth_version = "1.0"
     @signature_method = "HMAC-SHA256"
+    
 
     @api_location = "https://#{@netsuite_environment}.suitetalk.api.netsuite.com/services/NetSuitePort_2021_1"
-    @xml = @parameters['xml']
+    @attributes = valid_json(@parameters["attributes"])
+    @message = valid_json(@parameters['message'])
     @method = (@parameters["method"] || "get").upcase
   end
 
@@ -46,30 +47,20 @@ class NetsuiteGenericSoapApiV1
     response_code = nil
 
     begin
-      puts "XML Body: #{@xml}" if @debug_logging_enabled
+      puts "XML Body: #{@message}" if @debug_logging_enabled
       puts "API Location: #{@api_location}" if @debug_logging_enabled
 
+      # Load wsdl
+      wsdl = File.expand_path("../resources/netsuite_2021_2.wsdl", __FILE__)
+
+      # Build xml headers.  Authentication uses TBA which is built on Oauth 1.0
+      headers = build_header(@netsuite_environment, @consumer_key, @consumer_secret, @token_id, @token_secret, @nonce, @timestamp, @signature_method)
+
       # Setup savon client
-      client = Savon.client(endpoint: @api_location, namespace: 'urn:core_2021_1.platform.webservices.netsuite.com')
+      client = Savon.client(endpoint: @api_location, wsdl: wsdl, soap_header: headers, log_level: :info)
 
-      # build xml headers
-      headers = build_header(@netsuite_environment, @consumer_key, @consumer_secret, @token_id, @token_secret, @nonce, @timestamp)
-
-      # build envelope
-      envelope = REXML::Document.new(
-        "<soapenv:Envelope 
-          xmlns:xsd='http://www.w3.org/2001/XMLSchema'
-          xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-          xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'
-          xmlns:platformCore='urn:core_2021_1.platform.webservices.netsuite.com'
-          xmlns:platformMsgs='urn:messages_2021_1.platform.webservices.netsuite.com'>
-          <soapenv:Header>#{headers}</soapenv:Header>
-          <soapenv:Body>#{@xml}</soapenv:Body>
-        </soapenv:Envelope>"
-      )
-
-      # make call
-      response = client.call(@parameters["operation"].to_sym, xml: envelope.to_s)
+      # Make call to netsuite
+      response = client.call(@parameters["operation"].to_sym, :message => @message, :attributes => @attributes)
 
       # transform output
       result = @parameters["output_type"].upcase == "JSON" ? 
@@ -106,4 +97,10 @@ class NetsuiteGenericSoapApiV1
 
   # This is a ruby constant that is used by the escape method
   ESCAPE_CHARACTERS = { "&" => "&amp;", ">" => "&gt;", "<" => "&lt;", '"' => "&quot;" }
+
+  def valid_json(json)
+      return JSON.parse(json, {:symbolize_names => true})
+    rescue JSON::ParserError => e
+      return {}
+  end
 end

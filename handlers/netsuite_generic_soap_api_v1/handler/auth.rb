@@ -29,20 +29,27 @@ def build_signature(netsuite_environment, consumer_key, consumer_secret, token_i
   return signature
 end
 
-def build_header(netsuite_environment, consumer_key, consumer_secret, token_id, token_secret, nonce, timestamp)
+def build_header(netsuite_environment, consumer_key, consumer_secret, token_id, token_secret, nonce, timestamp, signature_method)
 
   # Transform the account id
-  netsuite_environment = netsuite_environment.gsub(/-/, "_").upcase
+  netsuite_environment_transform = netsuite_environment.gsub(/-/, "_").upcase
 
-  puts "Convert Account Id from '#{netsuite_environment}' to #{netsuite_environment}" if @debug_logging_enabled
+  puts "Convert Account Id from '#{netsuite_environment}' to '#{netsuite_environment_transform}'" if @debug_logging_enabled
 
   # Build & return headers node
-  return "<tokenPassport xsi:type='platformCore:TokenPassport'>
-      <account xsi:type='xsd:string'>#{netsuite_environment}</account>
-      <consumerKey xsi:type='xsd:string'>#{consumer_key}</consumerKey>
-      <token xsi:type='xsd:string'>#{token_id}</token>
-      <nonce xsi:type='xsd:string'>#{nonce}</nonce>
-      <timestamp xsi:type='xsd:long'>#{timestamp}</timestamp>
-      <signature algorithm='HMAC_SHA256' xsi:type='platformCore:TokenPassportSignature'>#{build_signature(netsuite_environment, consumer_key, consumer_secret, token_id, token_secret, nonce, timestamp)}</signature>
-  </tokenPassport>"
+  return { 'tokenPassport' =>
+    {
+      'account' => netsuite_environment_transform,
+      'consumerKey' => consumer_key,
+      'token' => token_id,
+      'nonce' => nonce,
+      'timestamp' => timestamp,
+      'signature' =>  build_signature(netsuite_environment_transform, consumer_key, consumer_secret, token_id, token_secret, nonce, timestamp),
+      :attributes! => {
+        'signature' => {
+          'algorithm' => signature_method
+        }
+      }
+    }
+  }
 end
