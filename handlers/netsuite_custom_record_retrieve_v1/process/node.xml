@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<taskDefinition id="netsuite_custom_record_retrieve" name="Netsuite Custom Record Search" schema_version="1.0" version="1">
+<taskDefinition id="netsuite_custom_record_retrieve" name="Netsuite Custom Record Retrieve" schema_version="1.0" version="1">
     <author>support@kineticdata.com</author>
-    <description>Update custom fields on a NetSuite Custom Record</description>
+    <description>Retrieve a NetSuite Custom Record</description>
     <helpurl></helpurl>
     <visible>false</visible>
     <deferrable>false</deferrable>
