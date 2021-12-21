@@ -9,7 +9,7 @@
   },
   "parameters" => {
     "error_handling" => "Rasie Error",
-    "type_id" => "219",
+    "internal_id" => "219",
     "search" => '',
     "preferences" => ''
   },
