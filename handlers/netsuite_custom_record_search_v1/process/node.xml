@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taskDefinition id="netsuite_custom_record_search" name="Netsuite Custom Record Search" schema_version="1.0" version="1">
+    <author>support@kineticdata.com</author>
+    <description>Update custom fields on a NetSuite Custom Record</description>
+    <helpurl></helpurl>
+    <visible>false</visible>
+    <deferrable>false</deferrable>
+    <parameters>
+        <parameter id="error_handling" label="Error Handling" required="true" tooltip="Determine what to return if an error is encountered." menu="Error Message,Raise Error">Error Message</parameter>
+        <parameter id="internal_id" label="Internal Id" required="true" tooltip="The Custom Record Internal Id"></parameter>
+        <parameter id="search" label="Search" required="true" tooltip="Search object in Json format. Note: date searches must be in ISO."></parameter>
+        <parameter id="preferences" label="Preferences" required="false" tooltip="Extened options that can be added to the search. (ie pageSize)"></parameter>
+    </parameters>
+    <handler name="netsuite_custom_record_search" version="1">
+        <infos>
+            <info name="netsuite_environment">&lt;%= @info['netsuite_environment'] %&gt;</info>
+            <info name="consumer_key">&lt;%= @info['consumer_key'] %&gt;</info>
+            <info name="consumer_secret">&lt;%= @info['consumer_secret'] %&gt;</info>
+            <info name="token_id">&lt;%= @info['token_id'] %&gt;</info>
+            <info name="token_secret">&lt;%= @info['token_secret'] %&gt;</info>
+            <info name="enable_debug_logging">&lt;%= @info['enable_debug_logging'] %&gt;</info>
+        </infos>
+        <parameters>
+            <parameter name="error_handling">&lt;%= @parameters.has_key?("error_handling") ?
+                @parameters["error_handling"] : "Raise Error" %&gt;</parameter>
+            <parameter name="internal_id">&lt;%= @parameters["internal_id"] %&gt;</parameter>
+            <parameter name="search">&lt;%= @parameters["search"] %&gt;</parameter>
+            <parameter name="preferences">&lt;%= @parameters["preferences"] %&gt;</parameter>
+        </parameters>
+    </handler>
+    <results format="xml">
+        <result name="Output" />
+        <result name="Handler Error Message" />
+    </results>
+</taskDefinition>

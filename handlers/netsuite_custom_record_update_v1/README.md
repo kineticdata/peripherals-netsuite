@@ -1,5 +1,5 @@
 # NetSuite Custom Record Update
-Using Update of Custom Fields on a Custom Form the [NetSuite SDK](https://github.com/NetSweet/netsuite).
+Used to update Custom Field values on a Custom Form using the [NetSuite SDK](https://github.com/NetSweet/netsuite).
 
 ## Parameters
 [Error Handling]
@@ -15,26 +15,28 @@ Using Update of Custom Fields on a Custom Form the [NetSuite SDK](https://github
     JSON array of custom feild objects to update.
 
 ### Sample Parameters
-    "error_handling" => "Rasie Error",
-    "type_id" => "555",
-    "internal_id" => "55555",
-    "attributes" => '[{
-      "value" : "Test Value",
-      "internal_id" : "1596",
-      "type" :  "platformCore:StringCustomFieldRef",
-      "script_id" : "custrecord_ts_field"
-    },{
-      "value" : "147.0",
-      "type" : "platformCore:DoubleCustomFieldRef",
-      "internal_id" : "1480",
-      "script_id" : "custrecord_ts_another_field"
-    }]'
+``` ruby
+  "error_handling" => "Rasie Error",
+  "type_id" => "555",
+  "internal_id" => "55555",
+  "attributes" => '[{
+    "value" : "Test Value",
+    "internal_id" : "1596",
+    "type" :  "platformCore:StringCustomFieldRef",
+    "script_id" : "custrecord_ts_field"
+  },{
+    "value" : "147.0",
+    "type" : "platformCore:DoubleCustomFieldRef",
+    "internal_id" : "1480",
+    "script_id" : "custrecord_ts_another_field"
+  }]'
+```
 
 ## Results
 [Handler Error Message]
   Error message if an error was encountered and Error Handling is set to "Error Message".
 [Output]
-    The returned value from the Rest Call (JSON format)
+    The returned value from the SDK request (JSON format)
 
 ## Important Notes
 * Version 2021_1 of the SOAP api is used by the handler.
