@@ -39,6 +39,7 @@ Perform search for Custom Records using the [NetSuite SDK](https://github.com/Ne
 ## Results
 [Handler Error Message]
   Error message if an error was encountered and Error Handling is set to "Error Message".
+  
 [Output]
     The returned value from the SDK request (Array of records in JSON format)
 

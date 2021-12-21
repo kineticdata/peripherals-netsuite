@@ -1,4 +1,4 @@
-# NetSuite Custom Record Update
+# NetSuite Custom Record Retrieve
 Retrieve a single Custom Record using the [NetSuite SDK](https://github.com/NetSweet/netsuite).
 
 ## Parameters
@@ -21,6 +21,7 @@ Retrieve a single Custom Record using the [NetSuite SDK](https://github.com/NetS
 ## Results
 [Handler Error Message]
   Error message if an error was encountered and Error Handling is set to "Error Message".
+  
 [Output]
     The returned value from the SDK request (A record in JSON format)
 
