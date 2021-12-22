@@ -10,7 +10,7 @@ Retrieve a single Opportunity using the [NetSuite SDK](https://github.com/NetSwe
 
 ### Sample Parameters
 ``` ruby
-  "error_handling" => "Rasie Error",
+  "error_handling" => "Raise Error",
   "internal_id" => "55555"
 ``` 
 

@@ -8,7 +8,7 @@
     "enable_debug_logging" => "no",
   },
   "parameters" => {
-    "error_handling" => "Rasie Error",
+    "error_handling" => "Raise Error",
     "internal_id" => "219",
     "search" => '',
     "preferences" => ''
