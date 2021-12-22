@@ -16,7 +16,7 @@ Perform search for Custom Records using the [NetSuite SDK](https://github.com/Ne
 
 ### Sample Parameters
 ``` ruby
-  "error_handling" => "Rasie Error",
+  "error_handling" => "Raise Error",
   "internal_id" => "55555",
   "search" => '[
     {

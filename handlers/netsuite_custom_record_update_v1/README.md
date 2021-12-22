@@ -12,11 +12,11 @@ Used to update Custom Field values on a Custom Form using the [NetSuite SDK](htt
     The Id of the record that is being updated.
 
 [Attributes]
-    JSON array of custom feild objects to update.
+    JSON array of custom field objects to update.
 
 ### Sample Parameters
 ``` ruby
-  "error_handling" => "Rasie Error",
+  "error_handling" => "Raise Error",
   "type_id" => "555",
   "internal_id" => "55555",
   "attributes" => '[{

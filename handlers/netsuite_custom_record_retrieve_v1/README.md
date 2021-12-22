@@ -13,7 +13,7 @@ Retrieve a single Custom Record using the [NetSuite SDK](https://github.com/NetS
 
 ### Sample Parameters
 ``` ruby
-  "error_handling" => "Rasie Error",
+  "error_handling" => "Raise Error",
   "internal_id" => "55555",
   "type_id" => '555'
 ``` 

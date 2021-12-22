@@ -8,7 +8,7 @@
     "enable_debug_logging" => "yes",
   },
   "parameters" => {
-    "error_handling" => "Rasie Error",
+    "error_handling" => "Raise Error",
     "search" => '[{
       "field" : "title",
       "operator" : "contains",
