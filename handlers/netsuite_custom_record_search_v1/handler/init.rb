@@ -28,8 +28,9 @@ class NetsuiteCustomRecordSearchV1
     api_version = "2021_1"
     @api_location = "https://#{@netsuite_environment}.suitetalk.api.netsuite.com/services/NetSuitePort_#{api_version}"
 
-    @search = valid_json(@parameters["search"])
-    @preferences = valid_json(@parameters["preferences"])
+    @search = valid_json(@parameters["search"], "Search")
+    @columns = valid_json(@parameters["columns"], "Columns")
+    @preferences = valid_json(@parameters["preferences"], "Preferences")
     @internal_id = @parameters["internal_id"]
 
     consumer_key = @info_values["consumer_key"]
@@ -76,6 +77,7 @@ class NetsuiteCustomRecordSearchV1
     basic_array.push(custom_record)
 
     preferences = @preferences
+    columns = @columns
     begin
       puts "Begining search for records belonging to recType #{@internal_id}."
       # Perform search
@@ -83,6 +85,7 @@ class NetsuiteCustomRecordSearchV1
         :criteria => {
           :basic => basic_array
         },
+        :columns => columns,
         :preferences => preferences
       )
 
@@ -91,7 +94,9 @@ class NetsuiteCustomRecordSearchV1
         puts "Build array of matching records."
         # Build array to return and convert records to 
         response.results.each { |result|
-          results.push(result.to_record)
+          record = result.to_record
+          record["internal_id"] = result.internal_id
+          results.push(record)
         }
       end
 
@@ -127,9 +132,9 @@ class NetsuiteCustomRecordSearchV1
   # This is a ruby constant that is used by the escape method
   ESCAPE_CHARACTERS = { "&" => "&amp;", ">" => "&gt;", "<" => "&lt;", '"' => "&quot;" }
 
-  def valid_json(json)
+  def valid_json(json, type)
       return JSON.parse(json, {:symbolize_names => true})
     rescue JSON::ParserError => e
-      return raise "Attributes not valied Json #{e}"
+      return raise "#{type} not valied Json #{e}"
   end
 end

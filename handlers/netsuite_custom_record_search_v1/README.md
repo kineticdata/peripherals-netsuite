@@ -11,6 +11,9 @@ Perform search for Custom Records using the [NetSuite SDK](https://github.com/Ne
 [Search]
   Additional basic search parameters.  This value must be a JSON array.  
 
+[Columns]
+  Define the columns to return with the request.
+
 [Preferences]
   Preferences passed to the search. e.g. pageSize
 
@@ -30,6 +33,7 @@ Perform search for Custom Records using the [NetSuite SDK](https://github.com/Ne
       ]
     }
   ]',
+  "columns" => '{}',
   "preferences" => '{
     "page_size" : 5,
     "body_fields_only" : true
