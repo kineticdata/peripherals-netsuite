@@ -5,9 +5,6 @@ Perform search for Opportunities using the [NetSuite SDK](https://github.com/Net
 [Error Handling]
   Select between returning an error message, or raising an exception.
 
-[Internal Id]
-  The Opportunity Type Id.
-
 [Search]
   Additional basic search parameters.  This value must be a JSON array.  
 
@@ -20,7 +17,6 @@ Perform search for Opportunities using the [NetSuite SDK](https://github.com/Net
 ### Sample Parameters
 ``` ruby
   "error_handling" => "Raise Error",
-  "internal_id" => "55555",
   "search" => '[
     {
       "field" : "created",
@@ -35,6 +31,7 @@ Perform search for Opportunities using the [NetSuite SDK](https://github.com/Net
   ]',
   "columns" => '{
     "tranSales:basic" : {
+      "platformCommon:internalId" : {},
       "platformCommon:title" : {},
       "platformCommon:probability" : {}
     },

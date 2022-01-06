@@ -82,7 +82,9 @@ class NetsuiteOpportunitySearchV1
         puts "Build array of matching records."
         # Build array to return and convert records to 
         response.results.each { |result|
-          results.push(result.to_record)
+          record = result.to_record
+          record["internal_id"] = result.internal_id
+          results.push(record)
         }
       end
       

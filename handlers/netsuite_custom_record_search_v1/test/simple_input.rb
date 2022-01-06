@@ -5,12 +5,13 @@
     "consumer_secret" => "",
     "token_id" => "",
     "token_secret" => "",
-    "enable_debug_logging" => "no",
+    "enable_debug_logging" => "yes",
   },
   "parameters" => {
     "error_handling" => "Raise Error",
-    "internal_id" => "219",
-    "search" => '',
-    "preferences" => ''
+    "internal_id" => "",
+    "search" => '{}',
+    "columns" => '{}',
+    "preferences" => '{}'
   },
 }
