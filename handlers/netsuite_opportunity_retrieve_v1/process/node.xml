@@ -8,7 +8,6 @@
     <parameters>
         <parameter id="error_handling" label="Error Handling" required="true" tooltip="Determine what to return if an error is encountered." menu="Error Message,Raise Error">Error Message</parameter>
         <parameter id="internal_id" label="Internal Id" required="true" tooltip="The Opportunity Internal Id"></parameter>
-        <parameter id="type_id" label="Type Id" required="true" tooltip="The Id of the Form Type that the record matches."></parameter>
     </parameters>
     <handler name="netsuite_opportunity_retrieve" version="1">
         <infos>
@@ -23,7 +22,6 @@
             <parameter name="error_handling">&lt;%= @parameters.has_key?("error_handling") ?
                 @parameters["error_handling"] : "Raise Error" %&gt;</parameter>
             <parameter name="internal_id">&lt;%= @parameters["internal_id"] %&gt;</parameter>
-            <parameter name="type_id">&lt;%= @parameters["type_id"] %&gt;</parameter>
         </parameters>
     </handler>
     <results format="xml">
