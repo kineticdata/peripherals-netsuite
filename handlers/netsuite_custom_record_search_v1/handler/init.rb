@@ -79,7 +79,7 @@ class NetsuiteCustomRecordSearchV1
     preferences = @preferences
     columns = @columns
     begin
-      puts "Begining search for records belonging to recType #{@internal_id}."
+      puts "Begining search for records belonging to recType #{@internal_id}." if @debug_logging_enabled 
       # Perform search
       response = NetSuite::Records::CustomRecord.search(
         :criteria => {
@@ -91,7 +91,7 @@ class NetsuiteCustomRecordSearchV1
 
       results = Array.new
       if (response) 
-        puts "Build array of matching records."
+        puts "Build array of matching records." if @debug_logging_enabled        
         # Build array to return and convert records to 
         response.results.each { |result|
           record = result.to_record

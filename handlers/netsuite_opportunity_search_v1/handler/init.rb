@@ -79,7 +79,7 @@ class NetsuiteOpportunitySearchV1
 
       results = Array.new
       if (response) 
-        puts "Build array of matching records."
+        puts "Build array of matching records." if @debug_logging_enabled 
         # Build array to return and convert records to 
         response.results.each { |result|
           record = result.to_record
