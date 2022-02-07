@@ -78,6 +78,7 @@ class NetsuiteCustomRecordSearchV1
 
     preferences = @preferences
     columns = @columns
+
     begin
       puts "Begining search for records belonging to recType #{@internal_id}." if @debug_logging_enabled 
       # Perform search

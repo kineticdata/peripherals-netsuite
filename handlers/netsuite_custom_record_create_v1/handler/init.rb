@@ -84,7 +84,8 @@ class NetsuiteCustomRecordCreateV1
     # Return (and escape) the results that were defined in the node.xml
     <<-RESULTS
     <results>
-      <result name="Output">#{escape(response)}</result>
+      <result name="Success">#{escape(response)}</result>
+      <result name="Internal Id">#{escape(record.internal_id)}</result>
       <result name="Handler Error Message">#{escape(error_message)}</result>
     </results>
     RESULTS
