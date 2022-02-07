@@ -1,4 +1,4 @@
-# NetSuite Custom Record Update
+# NetSuite Custom Record Search
 Perform search for Custom Records using the [NetSuite SDK](https://github.com/NetSweet/netsuite).
 
 ## Parameters
@@ -26,7 +26,6 @@ Perform search for Custom Records using the [NetSuite SDK](https://github.com/Ne
       "field" : "created",
       "operator" : "within",
       "type" : "SearchDateField",
-
       "value" : [
         "2021-01-01T22:00:00.000-07:00",
         "2021-12-20T22:00:00.000-07:00"

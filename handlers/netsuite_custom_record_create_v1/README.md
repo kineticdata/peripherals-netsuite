@@ -31,8 +31,10 @@ Used to Create Custom Records using the [NetSuite SDK](https://github.com/NetSwe
 ## Results
 [Handler Error Message]
   Error message if an error was encountered and Error Handling is set to "Error Message".
-[Output]
-    The returned value from the SDK request (JSON format)
+[Success]
+  A true or false value if the record was created.
+[Internal Id]
+  The internal id of the record that was created.
 
 ## Important Notes
 * Version 2021_1 of the SOAP api is used by the handler.

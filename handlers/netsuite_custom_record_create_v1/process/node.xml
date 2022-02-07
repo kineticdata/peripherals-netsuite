@@ -27,7 +27,8 @@
         </parameters>
     </handler>
     <results format="xml">
-        <result name="Output" />
+        <result name="Success" />
+        <result name="Internal Id" />
         <result name="Handler Error Message" />
     </results>
 </taskDefinition>

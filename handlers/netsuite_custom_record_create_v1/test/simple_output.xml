@@ -1,4 +1,5 @@
 <results>
-    <result name="Output" type="RegExp">.+</result>
+    <result name="Success" type="RegExp">.+</result>
+    <result name="Internal Id" type="RegExp">.+</result>
     <result name="Handler Error Message" type="Regexp"></result>
 </results>

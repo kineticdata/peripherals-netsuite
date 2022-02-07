@@ -5,11 +5,11 @@
     "consumer_secret" => "",
     "token_id" => "",
     "token_secret" => "",
-    "enable_debug_logging" => "no",
+    "enable_debug_logging" => "yes",
   },
   "parameters" => {
     "error_handling" => "Raise Error",
-    "internal_id" => "",
-    "type_id" => ""
+    "internal_id" => "13766",
+    "type_id" => "219"
   },
 }
