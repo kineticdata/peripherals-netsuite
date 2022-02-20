@@ -66,6 +66,7 @@ if not defined?(Builder)
   $:.unshift library_path
   # Require the library
   require 'builder'
+  require 'builder/version' unless defined?(Builder::VERSION)
 end
 
 # Validate the the loaded Builder library is the library that is expected for

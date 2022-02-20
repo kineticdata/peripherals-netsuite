@@ -3,7 +3,6 @@
 require 'builder/blankslate'
 
 module Builder
-  VERSION = "3.2.3"
 
   # Generic error for builder
   class IllegalBlockError < RuntimeError; end
