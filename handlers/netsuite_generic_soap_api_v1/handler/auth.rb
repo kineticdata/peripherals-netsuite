@@ -37,12 +37,15 @@ def build_header(netsuite_environment, consumer_key, consumer_secret, token_id, 
   puts "Convert Account Id from '#{netsuite_environment}' to #{netsuite_environment}" if @debug_logging_enabled
 
   # Build & return headers node
-  return "<tokenPassport xsi:type='platformCore:TokenPassport'>
-      <account xsi:type='xsd:string'>#{netsuite_environment}</account>
-      <consumerKey xsi:type='xsd:string'>#{consumer_key}</consumerKey>
-      <token xsi:type='xsd:string'>#{token_id}</token>
-      <nonce xsi:type='xsd:string'>#{nonce}</nonce>
-      <timestamp xsi:type='xsd:long'>#{timestamp}</timestamp>
-      <signature algorithm='HMAC_SHA256' xsi:type='platformCore:TokenPassportSignature'>#{build_signature(netsuite_environment, consumer_key, consumer_secret, token_id, token_secret, nonce, timestamp)}</signature>
-  </tokenPassport>"
+  return {
+    'platformMsgs:tokenPassport' => {
+      'platformCore:account' => netsuite_environment,
+      'platformCore:consumerKey' => consumer_key,
+      'platformCore:token' => token_id,
+      'platformCore:nonce' => nonce,
+      'platformCore:timestamp' => timestamp,
+      'platformCore:signature' => build_signature(netsuite_environment, consumer_key, consumer_secret, token_id, token_secret, nonce, timestamp),
+      :attributes! => { 'platformCore:signature' => { 'algorithm' => 'HMAC-SHA256' } }
+    }
+  }
 end

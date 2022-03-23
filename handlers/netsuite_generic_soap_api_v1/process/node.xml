@@ -9,7 +9,7 @@
         <parameter id="error_handling" label="Error Handling" required="true" tooltip="Determine what to return if an error is encountered." menu="Error Message,Raise Error">Error Message</parameter>
         <parameter id="output_type" label="Output Type" required="false" tooltip="The output type to return from a successful call." menu="JSON,XML">JSON</parameter>
         <parameter id="operation" label="Operation" required="true" menu="GET,POST,PUT,PATCH,DELETE" tooltip="GET,POST,PUT,PATCH,DELETE (Defaults to GET)">GET</parameter>
-        <parameter id="xml" label="XML" required="false" tooltip="XML body that is added to the envelope"></parameter>
+        <parameter id="body" label="Body" required="false" tooltip="JSON payload that is converted to xml and will the be body of the request"></parameter>
     </parameters>
     <handler name="netsuite_generic_soap_api" version="1">
         <infos>
@@ -26,7 +26,7 @@
             <parameter name="output_type">&lt;%= @parameters.has_key?("output_type") ?
                 @parameters['output_type'] : "JSON" %&gt;</parameter>
             <parameter name="operation">&lt;%= @parameters["operation"] %&gt;</parameter>
-            <parameter name="xml">&lt;%= @parameters["xml"] %&gt;</parameter>
+            <parameter name="body">&lt;%= @parameters["body"] %&gt;</parameter>
         </parameters>
     </handler>
     <results format="xml">

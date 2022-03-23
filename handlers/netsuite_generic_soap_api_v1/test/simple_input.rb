@@ -11,6 +11,6 @@
     "error_handling" => "Error Message",
     "output_type" => "JSON",
     "operation" => "update",
-    "xml" => "",
+    "body" => '',
   },
 }

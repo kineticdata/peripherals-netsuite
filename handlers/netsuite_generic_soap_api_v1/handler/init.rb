@@ -35,7 +35,7 @@ class NetsuiteGenericSoapApiV1
     @signature_method = "HMAC-SHA256"
 
     @api_location = "https://#{@netsuite_environment}.suitetalk.api.netsuite.com/services/NetSuitePort_2021_1"
-    @xml = @parameters['xml']
+    @json = @parameters['body']
     @method = (@parameters["method"] || "get").upcase
   end
 
@@ -46,30 +46,28 @@ class NetsuiteGenericSoapApiV1
     response_code = nil
 
     begin
-      puts "XML Body: #{@xml}" if @debug_logging_enabled
+      puts "Body: #{@json}" if @debug_logging_enabled
       puts "API Location: #{@api_location}" if @debug_logging_enabled
 
-      # Setup savon client
-      client = Savon.client(endpoint: @api_location, namespace: 'urn:core_2021_1.platform.webservices.netsuite.com')
-
-      # build xml headers
+      # build headers
       headers = build_header(@netsuite_environment, @consumer_key, @consumer_secret, @token_id, @token_secret, @nonce, @timestamp)
 
-      # build envelope
-      envelope = REXML::Document.new(
-        "<soapenv:Envelope 
-          xmlns:xsd='http://www.w3.org/2001/XMLSchema'
-          xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-          xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'
-          xmlns:platformCore='urn:core_2021_1.platform.webservices.netsuite.com'
-          xmlns:platformMsgs='urn:messages_2021_1.platform.webservices.netsuite.com'>
-          <soapenv:Header>#{headers}</soapenv:Header>
-          <soapenv:Body>#{@xml}</soapenv:Body>
-        </soapenv:Envelope>"
-      )
+      # Setup savon client
+      client = Savon.client({
+        endpoint: @api_location, 
+        wsdl: "https://webservices.netsuite.com/wsdl/v2021_2_0/netsuite.wsdl",
+        namespaces: namespaces,
+        soap_header: headers, 
+        log_level: @debug_logging_enabled ? :debug : :info,
+        filters: [:consumerKey, :token, :signature],
+        log: true
+      })
 
       # make call
-      response = client.call(@parameters["operation"].to_sym, xml: envelope.to_s)
+      response = client.call(
+        @parameters["operation"].to_sym, 
+        message: JSON.parse(@json)
+      )
 
       # transform output
       result = @parameters["output_type"].upcase == "JSON" ? 
@@ -77,7 +75,7 @@ class NetsuiteGenericSoapApiV1
 
     rescue Exception => error
       error_message = error.inspect
-      raise error if @error_handling == "Rasie Error"
+      raise error if @error_handling == "Raise Error"
     end
 
     # Return (and escape) the results that were defined in the node.xml
@@ -87,6 +85,31 @@ class NetsuiteGenericSoapApiV1
       <result name="Handler Error Message">#{escape(error_message)}</result>
     </results>
     RESULTS
+  end
+
+  def namespaces
+    {
+      'xmlns:platformMsgs'   => "urn:messages_2021_1.platform.webservices.netsuite.com",
+      'xmlns:platformCore'   => "urn:core_2021_1.platform.webservices.netsuite.com",
+      'xmlns:platformCommon' => "urn:common_2021_1.platform.webservices.netsuite.com",
+      'xmlns:listRel'        => "urn:relationships_2021_1.lists.webservices.netsuite.com",
+      'xmlns:tranSales'      => "urn:sales_2021_1.transactions.webservices.netsuite.com",
+      'xmlns:tranPurch'      => "urn:purchases_2021_1.transactions.webservices.netsuite.com",
+      'xmlns:actSched'       => "urn:scheduling_2021_1.activities.webservices.netsuite.com",
+      'xmlns:setupCustom'    => "urn:customization_2021_1.setup.webservices.netsuite.com",
+      'xmlns:listAcct'       => "urn:accounting_2021_1.lists.webservices.netsuite.com",
+      'xmlns:tranBank'       => "urn:bank_2021_1.transactions.webservices.netsuite.com",
+      'xmlns:tranCust'       => "urn:customers_2021_1.transactions.webservices.netsuite.com",
+      'xmlns:tranEmp'        => "urn:employees_2021_1.transactions.webservices.netsuite.com",
+      'xmlns:tranInvt'       => "urn:inventory_2021_1.transactions.webservices.netsuite.com",
+      'xmlns:listSupport'    => "urn:support_2021_1.lists.webservices.netsuite.com",
+      'xmlns:tranGeneral'    => "urn:general_2021_1.transactions.webservices.netsuite.com",
+      'xmlns:commGeneral'    => "urn:communication_2021_1.general.webservices.netsuite.com",
+      'xmlns:listMkt'        => "urn:marketing_2021_1.lists.webservices.netsuite.com",
+      'xmlns:listWebsite'    => "urn:website_2021_1.lists.webservices.netsuite.com",
+      'xmlns:fileCabinet'    => "urn:filecabinet_2021_1.documents.webservices.netsuite.com",
+      'xmlns:listEmp'        => "urn:employees_2021_1.lists.webservices.netsuite.com"
+    }
   end
 
   ##############################################################################

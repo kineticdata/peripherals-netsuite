@@ -11,21 +11,66 @@ This integration was built to work with the Netsuite Record SOAP api. It is gene
 [Operation]
     An operation supported for resource being requested.  This must match the xml operation.  For more information visit [SOAP Web Services Operations](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/chapter_N3477815.html).
 
-[XML]
-The XML body that will be added to the envelope prior. To learn more and find examples of xml body requirements visit [SuiteTalk SOAP Web Services Records Guide](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/book_156388697975.html)
+[Body]
+The body that will be converted to xml and added to the envelope prior. To learn more and find examples of xml body requirements visit [SuiteTalk SOAP Web Services Records Guide](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/book_156388697975.html).  The examples will need to be converted to JSON.
 
-### Sample XML values
+### Sample JSON values
 #### Get Opportunity
-``` xml
-<get xsi:type='platformMsgs:GetRequest'>
-    <baseRef xsi:type='platformCore:RecordRef' internalId='367340' type='opportunity'/>
-</get>
+``` json
+{
+  "platformMsgs:baseRef": {
+    "@xsi:type": "platformCore:RecordRef",
+    "@type": "opportunity",
+    "@internalId": 557340
+  }
+}
 ```
 #### Get Custom Entry
-``` xml
-<get xmlns='urn:customization.setup.webservices.netsuite.com'>
-    <baseRef internalId='10347' typeId='219' xsi:type='ns6:CustomRecordRef' xmlns:ns6='urn:core_2021_1.platform.webservices.netsuite.com'/>
-</get>
+``` json
+{
+  "platformMsgs:baseRef": {
+    "@xsi:type": "platformCore:CustomRecordRef",
+    "@typeId": 219,
+    "@internalId": 2418
+  }
+}
+```
+#### Saved Search 
+``` json
+{
+  "platformMsgs:searchRecord": {
+    "@savedSearchId": 1893,
+    "@xsi:type": "setupCustom:CustomRecordSearchAdvanced",
+    "setupCustom:criteria": {
+      "setupCustom:basic" : {
+        "platformCommon:created": {
+          "@operator": "within",
+          "platformCore:searchValue": "2022-01-01T22:00:00.000-07:00",
+          "platformCore:searchValue2": "2022-01-31T22:00:00.000-07:00"
+        },
+        "platformCommon:recType": {
+          "@internalId": 219
+        }
+      }
+    }
+  }
+}
+```
+
+#### Search Opportunities
+``` json
+{
+  "platformMsgs:searchRecord": {
+    "@xsi:type": "tranSales:OpportunitySearch",
+    "tranSales:basic": {
+      "platformCommon:lastModifiedDate": {
+        "@operator": "within",
+        "platformCore:searchValue": "2022-03-21T06:00:01.000-00:00",
+        "platformCore:searchValue2": "2022-03-22T06:00:01.000-00:00"
+      }
+    }
+  }
+}
 ```
 
 ## Results
@@ -36,18 +81,6 @@ The XML body that will be added to the envelope prior. To learn more and find ex
 
 ## Important Notes
 * Version 2021_1 of the SOAP api is used by the handler.
-* The handler assumes `urn:core_2021_1.platform.webservices.netsuite.com` namespace.
-* The handler builds the headers node and appends the provided body.  Below is the hardcoded envelope.
-    ``` xml
-    <soapenv:Envelope 
-        xmlns:xsd='http://www.w3.org/2001/XMLSchema'
-        xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-        xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'
-        xmlns:platformCore='urn:core_2021_1.platform.webservices.netsuite.com'
-        xmlns:platformMsgs='urn:messages_2021_1.platform.webservices.netsuite.com'>
-        <soapenv:Header>#{headers}</soapenv:Header>
-        <soapenv:Body>#{@xml}</soapenv:Body>
-    </soapenv:Envelope>
-    ```
-* Make note the prefix used is xsi.
+* The handler looks for a wsdl at https://webservices.netsuite.com/wsdl/v2021_2_0/netsuite.wsdl.
+* When building the body json it is important to note that `@` is used to add an attribute to the parent when converted to xml.  
 * TBA authentication is required for the handler.  For information on setting up TBA in the Netsuite environment visit [Getting Started with Token-based Authentication](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_4247337262.html)
