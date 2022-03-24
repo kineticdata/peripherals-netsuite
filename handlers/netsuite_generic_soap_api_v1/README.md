@@ -3,16 +3,16 @@ This integration was built to work with the Netsuite Record SOAP api. It is gene
 
 ## Parameters
 [Error Handling]
-    Select between returning an error message, or raising an exception.
+  Select between returning an error message, or raising an exception.
 
 [Output Type]
   The output type to return from a successful call.  Options are JSON or XML.
 
 [Operation]
-    An operation supported for resource being requested.  This must match the xml operation.  For more information visit [SOAP Web Services Operations](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/chapter_N3477815.html).
+  An operation supported for resource being requested.  This must match the xml operation.  For more information visit [SOAP Web Services Operations](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/chapter_N3477815.html).
 
 [Body]
-The body that will be converted to xml and added to the envelope prior. To learn more and find examples of xml body requirements visit [SuiteTalk SOAP Web Services Records Guide](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/book_156388697975.html).  The examples will need to be converted to JSON.
+  The body that will be converted to xml and added to the envelope prior. To learn more and find examples of xml body requirements visit [SuiteTalk SOAP Web Services Records Guide](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/book_156388697975.html).  The examples will need to be converted to JSON.
 
 ### Sample JSON values
 #### Get Opportunity

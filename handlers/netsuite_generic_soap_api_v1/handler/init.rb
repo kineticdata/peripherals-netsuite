@@ -65,7 +65,7 @@ class NetsuiteGenericSoapApiV1
 
       # make call
       response = client.call(
-        @parameters["operation"].to_sym, 
+        @parameters["operation"].downcase.to_sym, 
         message: JSON.parse(@json)
       )
 

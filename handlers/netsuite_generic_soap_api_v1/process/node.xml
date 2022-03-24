@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<taskDefinition id="netsuite_generic_soap_api" name="Netsuite Generic Rest Api" schema_version="1.0" version="1">
+<taskDefinition id="netsuite_generic_soap_api" name="Netsuite Generic Soap Api" schema_version="1.0" version="1">
     <author>support@kineticdata.com</author>
     <description>A generic soap handler for interacting with NetSuite</description>
     <helpurl></helpurl>
@@ -8,7 +8,7 @@
     <parameters>
         <parameter id="error_handling" label="Error Handling" required="true" tooltip="Determine what to return if an error is encountered." menu="Error Message,Raise Error">Error Message</parameter>
         <parameter id="output_type" label="Output Type" required="false" tooltip="The output type to return from a successful call." menu="JSON,XML">JSON</parameter>
-        <parameter id="operation" label="Operation" required="true" menu="GET,POST,PUT,PATCH,DELETE" tooltip="GET,POST,PUT,PATCH,DELETE (Defaults to GET)">GET</parameter>
+        <parameter id="operation" label="Operation" required="true" tooltip="Must match the operation that the body is requesting">GET</parameter>
         <parameter id="body" label="Body" required="false" tooltip="JSON payload that is converted to xml and will the be body of the request"></parameter>
     </parameters>
     <handler name="netsuite_generic_soap_api" version="1">
